@@ -1,0 +1,50 @@
+Private Sub cmdImport_Click()
+    Import_Cpty_Txt
+End Sub
+
+
+
+Sub Import_Cpty_Txt()
+    
+    Dim sh As Worksheet
+    Set sh = ThisWorkbook.Sheets("Import")
+    
+    sh.Range("A2:FE" & sh.Rows.Count).Clear
+    
+    Dim QryTbl As QueryTable
+    Set QryTbl = sh.QueryTables.Add(Connection:="TEXT;" & ThisWorkbook.Sheets("Main").Range("File_Location").Value2, Destination:=sh.Range("$A$2"))
+
+    With QryTbl
+        .PreserveFormatting = True
+        .RefreshOnFileOpen = False
+        .SaveData = True
+        .AdjustColumnWidth = True
+        .RefreshPeriod = 0
+        .TextFilePromptOnRefresh = False
+        .TextFilePlatform = 437
+        .TextFileStartRow = 1
+        .TextFileParseType = xlFixedWidth
+        .TextFileTextQualifier = xlTextQualifierDoubleQuote
+        .TextFileColumnDataTypes = Array(2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2)
+        .TextFileFixedColumnWidths = Array(10, 20, 40, 10, 20, 40, 30, 30, 30, 40, 40, 40, 40, 40, 40, 8, 8, 8, 8, 8, 8, 6, 10, 10, 10, 10, 10, 30, 30, 30, 30, 30, 3, 8, 8, 20, 20, 20, 2, 2, 10, 10, 1, 1, 1, 6, 10, 12, 8, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 11, 8, 7, 16, 1, 1, 4, 4, 4, 30, 28, 12, 10, 8, 4, 4, 10, 11, 2, 2, 1, 4, 12, 12, 1, 1, 1, 1, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 1, 1, 6, 2, 1, 12, 16, 4, 12, 8, 2, 2, 4, 4, 4, 2, 2, 20, 1, 21, 1)
+        .Refresh BackgroundQuery:=False
+        .Delete
+    End With
+    Set QryTbl = Nothing
+    
+    sh.Select
+    MsgBox "Done"
+    
+End Sub
+
+
+
+
+Bytes_Start	Bytes_End	Bytes_Length	Description	Format
+1	10	10	*Firm Account	A10
+11	30	20	*Firm Account Short Name	A20
+31	70	40	*Firm Account Long Name	A40
+71	80	10	*Master Account Number	A10
+81	100	20	*Master Account Short Name	A20
+101	140	40	*Master Account Long Name	A40
+
